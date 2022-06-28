@@ -1,57 +1,71 @@
 const express = require('express')
-const { generateAccessToken, writeToStore, readStore } = require('../../utils')
+const {
+  writeToStore,
+  readStoreByUsername,
+} = require('../../services')
+const {
+  generateAccessToken,
+} = require('../../utils')
+
 var router = express.Router()
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', (req, res, next) => {
+  try {
     let { email, password } = req.body
     let existingUser
     let token
 
-  try {
-    existingUser = await readStore(email)
+    existingUser = readStoreByUsername(email)
 
     if (!existingUser || existingUser.password != password) {
       const error = Error('Wrong password please check at once')
-      return next(error)
+      return res.status(401).json({ success: false, message: error.message })
     }
 
     //Creating jwt token
     token = generateAccessToken(email)
-  } catch (err) {
-    const error = new Error('Error! Something went wrong.')
+    res.status(200).json({
+      success: true,
+      data: {
+        email,
+        token,
+      },
+    })
+  } catch (e) {
+    const error = new Error('Unable to login user')
     return next(error)
   }
-
-  res.status(200).json({
-    success: true,
-    data: {
-      email,
-      token,
-    },
-  })
 })
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   let token
   const { name, email, password } = req.body
   const newUser = {
     [email]: {
       name,
+      email,
       password, //TODO: hash password
     },
   }
 
   try {
-    await writeToStore(newUser)
+    existingUser = readStoreByUsername(email)
+    if (existingUser) {
+      const error = Error('User already registered')
+      return res.status(401).json({ success: false, message: error.message })
+    }
+
+    writeToStore(newUser)
     token = generateAccessToken(email)
-  } catch (err) {
-    const error = new Error('Error! Something went wrong.')
-    return next(error)
+
+    res.status(200).json({
+      success: true,
+      data: { name, email, token },
+    })
+  } catch (e) {
+    const error = Error('unable to signup user')
+    return res.status(401).json({ success: false, message: error.message })
   }
-  res.status(200).json({
-    success: true,
-    data: { name, email, token },
-  })
 })
 
 module.exports = router

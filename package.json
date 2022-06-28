@@ -1,7 +1,7 @@
 {
   "name": "simple-weight-tracker-server",
   "version": "1.0.0",
-  "description": "Implement a simple weight-tracker app.",
+  "description": "Implement a simple weight-tracker app - test",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.20.0",

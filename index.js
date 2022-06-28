@@ -1,16 +1,14 @@
 require('dotenv').config()
 
-const bodyParser = require('body-parser')
 const express = require('express')
-
 const rootRouter = require('./routers')
 
 const app = express()
 const PORT = 3000
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api', rootRouter)
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
 
 app.listen(PORT, (error) => {
   if (!error)
