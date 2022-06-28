@@ -1,4 +1,4 @@
-export default async function readStoreByUsername(username) {
+async function readStoreByUsername(username) {
   try {
     const source = await readStore()
     const data = source.filter((item) => item.username === username)
@@ -7,3 +7,4 @@ export default async function readStoreByUsername(username) {
     throw new Error(error.message)
   }
 }
+module.exports = readStoreByUsername

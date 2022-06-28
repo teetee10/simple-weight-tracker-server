@@ -11,3 +11,4 @@ function verifyAccessToken(req, res, next) {
     next()
   })
 }
+module.exports = verifyAccessToken
