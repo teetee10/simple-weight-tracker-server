@@ -1,8 +1,8 @@
 export default async function writeStore(params) {
   try {
     await fs.writeFile(process.env.DB_PATH, JSON.stringify(params))
-    return { status: true }
+    return true
   } catch (error) {
-    return { status: false, message: error.message }
+    throw new Error(error.message)
   }
 }
