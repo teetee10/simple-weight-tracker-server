@@ -102,7 +102,7 @@
               "in": "body",
               "description": "weight that we want to create",
               "schema": {
-                "$ref": "#/definitions/Weight"
+                "$ref": "#/definitions/WeightAdd"
               }
             }
           ],
@@ -195,5 +195,14 @@
         }
       }
      
-    }
+    },
+     "securityDefinitions": {
+      "bearerAuth": {
+        "name": "Authorization",
+        "in": "header",
+        "type": "apiKey",
+        "description": "JWT Authorization header"
+      }
+  },
+  "security": [ { "bearerAuth": [] } ]
   }
