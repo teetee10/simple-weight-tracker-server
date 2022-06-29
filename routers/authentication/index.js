@@ -11,7 +11,7 @@ var router = express.Router()
 
 router.post('/login', (req, res, next) => {
   try {
-    let { email, password } = req.body
+    const { email, password } = req.body
     let existingUser
     let token
 
