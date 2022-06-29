@@ -11,6 +11,7 @@ var router = express.Router()
 router.post('/add', verifyAccessToken, (req, res, next) => {
   const initWeight = []
   try {
+    // add validation
     const { weight, time } = req.body
     const username = req.user
     const userData = readStoreByUsername(username)

@@ -1,16 +1,12 @@
 const express = require('express')
-const {
-  writeToStore,
-  readStoreByUsername,
-} = require('../../services')
-const {
-  generateAccessToken,
-} = require('../../utils')
+const { writeToStore, readStoreByUsername } = require('../../services')
+const { generateAccessToken } = require('../../utils')
 
 var router = express.Router()
 
 router.post('/login', (req, res, next) => {
   try {
+    // add validation
     const { email, password } = req.body
     let existingUser
     let token
@@ -33,7 +29,7 @@ router.post('/login', (req, res, next) => {
     })
   } catch (e) {
     const error = new Error('Unable to login user')
-    return next(error)
+    return res.status(401).json({ success: false, message: error.message })
   }
 })
 

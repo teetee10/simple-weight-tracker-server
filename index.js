@@ -3,9 +3,14 @@ require('dotenv').config()
 const express = require('express')
 const rootRouter = require('./routers')
 var cors = require('cors') 
-
+const swaggerUi = require("swagger-ui-express");
+  swaggerDocument = require('./swagger.json');
 const app = express()
 const PORT = 3000
+
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cors())
 app.use(express.json());
