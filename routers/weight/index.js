@@ -49,4 +49,27 @@ router.get('/history', verifyAccessToken, (req, res, next) => {
   }
 })
 
+router.post('/update', verifyAccessToken, (req, res, next) => {
+  try { 
+    const { weight } = req.body
+    const username = req.user
+    const userData = readStoreByUsername(username)
+ 
+    // prepare payload
+    const payload = {
+      [username]: { ...userData, weight },
+    }
+    //save to storage/db
+    writeToStore(payload)
+    res.json({
+      success: true,
+      data: weight
+    })
+  } catch (e) {
+    const error = Error('unable to update weight')
+    return res.status(401).json({ success: false, message: error.message })
+  }
+})
+
+
 module.exports = router

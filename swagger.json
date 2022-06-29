@@ -111,7 +111,7 @@
           ],
           "responses": {
             "200": {
-              "description": "create new user weight with time",
+              "description": "weight added",
               "schema": {
                 "$ref": "#/definitions/WeightAdd"
               }
@@ -135,6 +135,35 @@
               }
             }
           }
+      },
+      "/api/weight/update": {
+           "post": {
+          "tags": [
+            "Weight"
+          ],
+          "description": "update weight entries",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "weight that we want to update",
+              "schema": {
+                "$ref": "#/definitions/WeightHistory"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "update weight entries",
+              "schema": {
+                "$ref": "#/definitions/WeightHistory"
+              }
+            }
+          }
+        } 
       }
     },
     "definitions": {
