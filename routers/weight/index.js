@@ -24,7 +24,10 @@ router.post('/add', verifyAccessToken, (req, res, next) => {
     }
     //save to storage/db
     writeToStore(payload)
-    res.json(weightMeta)
+    res.json({
+      success: true,
+      data: weightMeta
+    })
   } catch (e) {
     const error = Error('unable to save weight')
     return res.status(401).json({ success: false, message: error.message })
@@ -35,7 +38,10 @@ router.get('/history', verifyAccessToken, (req, res, next) => {
   try {
     const userData = readStoreByUsername(req.user)
     const weightHistory = userData.weight
-    res.json(weightHistory)
+    res.json({
+      success: true,
+      data: weightHistory
+    })
   } catch (e) {
     const error = Error('unable to fetch weight')
     return res.status(401).json({ success: false, message: error.message })
